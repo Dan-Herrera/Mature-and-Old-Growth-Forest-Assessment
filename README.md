@@ -9,16 +9,21 @@ Download the entire `assessMOG` folder from this Github repository, and unzip th
 
 Once you have saved the folder, open R Studio and load the function by sourcing the script from the `assessMOG` folder. Note that the entire filepath must be specified for your computer to find the file.
 ```
-> source("[YOUR FILEPATH]/assessMOG/FUNCTION_assessMOG.R") #loads function into R environment
+source("[YOUR FILE PATH]/assessMOG/FUNCTION_assessMOG.R") #loads function into R environment
 ```
 
 To access the Pisgah National Forest shapefile, use the `getPisgah()` function. If you are using your own shapefile, ensure that the file is in `sf` format. The function will reproject the shapefile as needed.
 
 ```
-> pisgah <- getPisgah() #reads in Pisgah National Forest Shapefile
-> plot(pisgah$geometry) #plot a map of the forest shapefile
+pisgah <- getPisgah() #reads in Pisgah National Forest Shapefile
+plot(pisgah$geometry) #plot a map of the forest shapefile
 ```
 DAN!!!! INSERT A MAP HERE!
 
 ## Using the assessMOG function
-Two arguments are needed to run the function: the shapefile of the `locale`, and the file path of the `assessMOG` folder. The `fecent` and `interpolate` arguments both default to `TRUE` but can be changed if desired. Only the most recent FIA plot data are used when `recent = TRUE`, and a raster of interpolated mature and old growth forests is produced when `interpolate = TRUE`. Finally, `api` defaults to the `rFIA` package.  
+Two arguments are needed to run the function: the shapefile of the `locale`, and the file path of the `assessMOG` folder. The `recent` and `interpolate` arguments both default to `TRUE` but can be changed if desired. Only the most recent FIA plot data are used when `recent = TRUE`, and a raster of interpolated mature and old growth forests is produced when `interpolate = TRUE`. Finally, `api` defaults to the `rFIA` package. At this point, the `rFIA` package is the only supported API to access FIA data. Future versions of this function may incroporate alternative API's.
+
+```
+assessMOG(locale = pisgah, #sf shapefile of study area
+          source.path = "[YOUR FILE PATH]/assessMOG") #file path to the assessMOG folder
+```
