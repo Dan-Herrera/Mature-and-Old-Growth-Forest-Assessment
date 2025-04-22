@@ -15,7 +15,10 @@ source("[YOUR FILE PATH]/mapMOG/FUNCTION_mapMOG.R") #loads function into R envir
 To access the Olympic National Forest shapefile, use the `getOlympic()` function which is now saved in your environment. If you are using your own shapefile, ensure that the file is in `sf` format. The function will reproject the shapefile as needed. I use `ggplot2` to visualize shapefiles in this tutorial, but base R or other plotting packages can also be used.
 
 ```
-olympicNF <- getOlympic() #reads in Olympic National Forest Shapefile
+
+my.folderpath <- "[YOUR FILE PATH]/mapMOG" #save file path to mapMog FOLDER (not function)
+
+olympicNF <- getOlympic(source.path = my.folderpath) #reads in Olympic National Forest Shapefile
 
 library(ggplot2) #load ggplot2
 
@@ -33,7 +36,7 @@ Two arguments are needed to run the function: the shapefile of the `locale`, and
 
 ```
 mapMOG(locale = olympicNF, #specify your study area
-          source.path = "[YOUR FILE PATH]/mapMOG") #specify the location of the folder that holds the function and auxiliary data
+          source.path = my.folderpath) #specify the location of the folder that holds the function and auxiliary data
 ```
 
 When you run the `mapMOG()` function, updates will print in your console ensuring that data has been succesfully obtained. Error messages may also print if data are not available, etc. The `mapMOG()` function requires internet access to obtain data, but no error message will warn the user that the computer does not have access to intenet. If an especially cryptic error message appears, check your internet connection.
