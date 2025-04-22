@@ -2,17 +2,17 @@
 Mature and old growth forest support vast quantities of life, and are critical to the function of many ecosystems. While remotely sensed landcover datasets can indicate the spatial distribution of forests, they offer little insight to the age of forests. Fortunately, the United States Forest Service maintains an extensive forest inventory program across public and private lands called the [Forest Inventory Analysis](https://research.fs.usda.gov/programs/fia) (FIA). This function uses R to access FIA data from the [Forest Service data repository](https://research.fs.usda.gov/products/dataandtools/tools/fia-datamart), then assesses the data to determine if it meets the definitions for [mature](https://www.sciencedirect.com/science/article/abs/pii/S0378112723005959) or [old growth](https://www.sciencedirect.com/science/article/abs/pii/S0378112723006710) forest. Definitions vary by region and forest-type, offering substantial flexibility even across ecosystems. Finally, this function offers the option to interpolate the mature/old growth (MOG) status of unsampled forests based on neighboring sampled forests. The following tutorial explains how to use the function.
 
 ## Identifying a study area
-The `assessMOG()` function requires the user to identify a study area using a shapefile in `sf` format. The study area, called a `locale`, can be as large as a state, or as small as a forest. Please note, however, that the function cannot currently accomodate multi-state processing. If your study `locale` spans multiple states, the function must be run seperately for each state contained in the `locale`. Additionally, small forests are not likely to contain enough FIA plots for adequate interpolation. Assessing data at the landscape-level (e.g., county, etc.) is likely to produce greater insights, even if you are only interested in a small portion of the landscape. In this tutorial we will use part of Olympic National Forest as a case study. A shapefile of Olympic National Forest is included in the function folder for your convenience.
+The `mapMOG()` function requires the user to identify a study area using a shapefile in `sf` format. The study area, called a `locale`, can be as large as a state, or as small as a forest. Please note, however, that the function cannot currently accomodate multi-state processing. If your study `locale` spans multiple states, the function must be run seperately for each state contained in the `locale`. Additionally, small forests are not likely to contain enough FIA plots for adequate interpolation. Assessing data at the landscape-level (e.g., county, etc.) is likely to produce greater insights, even if you are only interested in a small portion of the landscape. In this tutorial we will use part of Olympic National Forest as a case study. A shapefile of Olympic National Forest is included in the function folder for your convenience.
 
 ## Downloading and Accessing the function and data
-Download the entire `assessMOG` folder from this Github repository, and unzip the folder if necessary. We recomend moving the folder from the Downloads folder of your computer to a more perminant location. **Do not add or remove files from the `assessMOG` folder, as these files are necessary for proper functionality.**
+Download the entire `mapMOG` folder from this Github repository, and unzip the folder if necessary. We recomend moving the folder from the Downloads folder of your computer to a more perminant location. **Do not add or remove files from the `mapMOG` folder, as these files are necessary for proper functionality.**
 
-Once you have saved the folder, open R Studio and load the function by sourcing the script from the `assessMOG` folder. Note that the entire filepath must be specified for your computer to find the file.
+Once you have saved the folder, open R Studio and load the function by sourcing the script from the `mapMOG` folder. Note that the entire filepath must be specified for your computer to find the file.
 ```
-source("[YOUR FILE PATH]/assessMOG/FUNCTION_assessMOG.R") #loads function into R environment
+source("[YOUR FILE PATH]/mapMOG/FUNCTION_mapMOG.R") #loads function into R environment
 ```
 
-To access the Olympic National Forest shapefile, use the `getOlympic()` function. If you are using your own shapefile, ensure that the file is in `sf` format. The function will reproject the shapefile as needed. I use `ggplot2` to visualize shapefiles in this tutorial, but base R or other plotting packages can also be used.
+To access the Olympic National Forest shapefile, use the `getOlympic()` function which is now saved in your environment. If you are using your own shapefile, ensure that the file is in `sf` format. The function will reproject the shapefile as needed. I use `ggplot2` to visualize shapefiles in this tutorial, but base R or other plotting packages can also be used.
 
 ```
 olympicNF <- getOlympic() #reads in Olympic National Forest Shapefile
@@ -28,18 +28,18 @@ ggplot()+
 ![olympicPoly](https://github.com/user-attachments/assets/723ef0cc-58ef-4d98-9540-83131b61eaf8)
 
 
-## Using the assessMOG function
-Two arguments are needed to run the function: the shapefile of the `locale`, and the file path of the `assessMOG` folder. The `recent` and `interpolate` arguments both default to `TRUE` but can be changed if desired. Only the most recent FIA plot data are used when `recent = TRUE`, and a raster of interpolated mature and old growth forests is produced when `interpolate = TRUE`. Finally, `api` defaults to the `rFIA` package. At this point, the `rFIA` package is the only supported API to access FIA data. Future versions of this function may incroporate alternative API's.
+## Using the mapMOG function
+Two arguments are needed to run the function: the shapefile of the `locale`, and the file path of the `mapMOG` folder. The `recent` and `interpolate` arguments both default to `TRUE` but can be changed if desired. Only the most recent FIA plot data are used when `recent = TRUE`, and a raster of interpolated mature and old growth forests is produced when `interpolate = TRUE`. Finally, `api` defaults to the `rFIA` package. At this point, the `rFIA` package is the only supported API to access FIA data. Future versions of this function may incroporate alternative API's.
 
 ```
-assessMOG(locale = olympicNF, #specify your study area
-          source.path = "[YOUR FILE PATH]/assessMOG") #specify the location of the folder that holds the function and auxiliary data
+mapMOG(locale = olympicNF, #specify your study area
+          source.path = "[YOUR FILE PATH]/mapMOG") #specify the location of the folder that holds the function and auxiliary data
 ```
 
-When you run the `assessMOG()` function, updates will print in your console ensuring that data has been succesfully obtained. Error messages may also print if data are not available, etc. The `assessMOG()` function requires internet access to obtain data, but no error message will warn the user that the computer does not have access to intenet. If an unclear error message appears, check your internet connection.
+When you run the `mapMOG()` function, updates will print in your console ensuring that data has been succesfully obtained. Error messages may also print if data are not available, etc. The `mapMOG()` function requires internet access to obtain data, but no error message will warn the user that the computer does not have access to intenet. If an especially cryptic error message appears, check your internet connection.
 
 ## Visualizing and interpreting the output
-After the function is finished running, it will produce two outputs: a shapefile of FIA points classified by their MOG score, and a raster of MOG scores for all forested land in the `locale`. Note that these objects are automatically named `MOG.points` and `MOG.raster` Let's take a look at the FIA points first:
+After the function is finished running, it will produce two outputs: a shapefile of FIA points classified by their MOG score, and a raster of interpolated MOG scores for all forested land in the `locale`. Note that these objects are automatically named `MOG.points` and `MOG.raster` Let's take a look at the FIA points first:
 
 ```
 ggplot()+
@@ -52,9 +52,9 @@ ggplot()+
 ```
 ![olympicPoints](https://github.com/user-attachments/assets/223c8479-d5b2-489d-a03e-d001c4d416b3)
 
-Each of the points on the map is a single FIA plot. The color of each point indicates the MOG score of that point. Scores range between zero and one, with zreo indicating non-mature or old growth and one indicating old growth. A value of 0.5 indicates the forest is mature. In this example, all FIA plots in this section of Olympic National Forest are classified as being mature or old growth forest since all points have a score of 0.5 or greater. You may notice that some FIA points fall outside of the national forest. The function retrieves and processes data within 5 kilometers of the `locale` to minimize inacurate interpolation at the forest edge due to sparse data.
+Each of the points on the map is a single FIA plot. The color of each point indicates the MOG score of that point. Scores range between zero and one, with zreo indicating non-mature or old growth and one indicating old growth. A value of 0.5 indicates the forest is mature. In this example, all FIA plots in this section of Olympic National Forest are classified as being mature or old growth forest since all points have a score of 0.5 or greater. You may notice that some FIA points fall outside of the national forest. The function retrieves and processes data within 5 kilometers of the `locale` to minimize inacurate interpolation at the locale edge due to sparse data.
 
-You may notice that there are sections of the forest which do not have FIA data. We can use the interpolated MOG raster to offer insight about the MOG status of those areas based on the status of nearest FIA points. The fastest way to vizualize this raster is to use base R: `plot(MOG.raster)`. However, for the sake of consistency, we will use `ggplot2()` in this example.
+You may notice that there are sections of the forest which do not have FIA data. We can use the interpolated MOG raster to offer insight about the MOG status of those areas based on the status of the three nearest FIA points. The fastest way to vizualize this raster is to use base R: `plot(MOG.raster)`. However, for the sake of consistency, we will use `ggplot2()` in this example.
 
 ```
 MOG.raster <- raster::raster(MOG.raster) #convert spatRaster to raster format
@@ -78,4 +78,4 @@ While interpolation can be helpful, it is important to remember that this is sim
 
 Dynamic data exploration can be achieved using the `mapview` package: `mapview(MOG.raster.transformed)`
 
-If you encounter issues with the `assessMOG()` function, please email Dan Herrera at *herrerawildlife(at)gmail.com*.
+If you encounter issues with the `mapMOG()` function, please email Dan Herrera at *herrerawildlife(at)gmail.com*.
