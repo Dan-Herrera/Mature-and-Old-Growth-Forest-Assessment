@@ -60,9 +60,10 @@ Each of the points on the map is a single FIA plot. The color of each point indi
 You may notice that there are sections of the forest which do not have FIA data. We can use the interpolated MOG raster to offer insight about the MOG status of those areas based on the status of the three nearest FIA points. The fastest way to vizualize this raster is to use base R: `plot(MOG.raster)`. However, for the sake of consistency, we will use `ggplot2()` in this example.
 
 ```
-MOG.raster <- raster::raster(MOG.raster) #convert spatRaster to raster format
-MOG.raster.transformed <- raster::projectRaster(from = MOG.raster, #reproject raster to ensure sensible plotting
-                                          crs = 4326) #WGS84
+#library(terra) #if you just ran the mapMOG function, the terra package is already loaded. No need to load again
+
+MOG.raster.transformed <- terra::project(x = MOG.raster, #reproject raster to ensure sensible plotting
+                                  y = "epsg:4326") #WGS84
 plot.df <- as.data.frame(x = MOG.raster.transformed, #convert raster into a dataframe
                          xy = TRUE) #save centroid coordinates of each cell
 ggplot()+
