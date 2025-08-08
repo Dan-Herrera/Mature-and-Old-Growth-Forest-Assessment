@@ -5,9 +5,22 @@ Mature and old growth forest support vast quantities of life, and are critical t
 The `mapMOG()` function requires the user to identify a study area using a shapefile in `sf` format. The study area, called a `locale`, can be as large as a state, or as small as a forest. Please note, however, that the function cannot currently accommodate multi-state processing. If your study `locale` spans multiple states, the function must be run separately for each state contained in the `locale`. Additionally, small forests are not likely to contain enough FIA plots for adequate interpolation. Assessing data at the landscape-level (e.g., county, etc.) is likely to produce greater insights, even if you are only interested in a small portion of the landscape. In this tutorial we will use part of Olympic National Forest as a case study. A shapefile of Olympic National Forest is included in the function folder for your convenience.
 
 ## Downloading and Accessing the function and data
-[Download the entire mapMOG folder from Dryad](https://drive.google.com/drive/folders/1EM1pKgUz62EmD2MrMg4RpMkV43ndUvaU?usp=sharing) (file sizes exceed Github's limits - email me if the link is broken), and unzip the folder if necessary. We recommend moving the folder from the Downloads folder of your computer to a more permanent location. **Do not add or remove files from the `mapMOG` folder, as these files are necessary for proper functionality.**
+[Download the entire mapMOG folder from Dryad](https://drive.google.com/drive/folders/1EM1pKgUz62EmD2MrMg4RpMkV43ndUvaU?usp=sharing) (file sizes exceed Github's limits - email me if the link is broken), and unzip the folder if necessary. We recommend moving the folder from the Downloads folder of your computer to a more permanent location. **Do not remove files from the `mapMOG` folder, as these files are necessary for proper functionality.**
 
-Once you have saved the folder, open R Studio and load the function by sourcing the script from the `mapMOG` folder. Note that the entire filepath must be specified for your computer to find the file.
+File size limitations barred us from including all necessary files in the ‘mapMOG’ folder available for download. Prior to running the function, download the following files and add them to the mapMOG folder:
+
+*If you plan on interpolating MOG across unsampled landscapes*
+1.	Download the most recent canopy cover layer from the National Land cover Database: https://www.mrlc.gov/data
+2.	Unzip the downloaded folder into the ‘utility_canopy’ subfolder of ‘mapMOG’ such that the file structure is ‘[YOUR FILE PATH]/mapMOG/utility_canopy/[CANOPY RASTER]’
+3.	No need to rename the raster
+   
+*If you plan on assessing MOG in the Pacific Northwest Region or Pacific Southwest Region*
+1.	Download the PNV_Map_Layer (PNV_Map_zip_20220127.zip) from box: https://app.box.com/s/hfo4y7f9tg4vetm83zl4ahzhv0grqyqj/folder/166077218938
+2.	Unzip the downloaded folder into your ‘mapMOG’ folder such that the file structure is ‘[YOUR FILE PATH]/mapMOG/[PNV RASTER.tif]’
+3.	Rename the raster “utility_R5_PAZ” to ensure functionality
+
+
+Once you have added the canopy and PNV files to your `mapMOG` folder (if necessary), open R Studio and load the function by sourcing the script from the `mapMOG` folder. Note that the entire filepath must be specified for your computer to find the file.
 ```
 source("[YOUR FILE PATH]/mapMOG/FUNCTION_mapMOG.R") #loads function into R environment
 ```
