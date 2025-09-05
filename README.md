@@ -13,14 +13,8 @@ File size limitations barred us from including all necessary files in the ‘map
 1.	Download the most recent canopy cover layer from the National Land cover Database: https://www.mrlc.gov/data
 2.	Unzip the downloaded folder into the ‘utility_canopy’ subfolder of ‘mapMOG’ such that the file structure is ‘[YOUR FILE PATH]/mapMOG/utility_canopy/[CANOPY RASTER]’
 3.	No need to rename the raster
-   
-*If you plan on assessing MOG in the Pacific Northwest Region or Pacific Southwest Region*
-1.	Download the PNV_Map_Layer (PNV_Map_zip_20220127.zip) from box: https://app.box.com/s/hfo4y7f9tg4vetm83zl4ahzhv0grqyqj/folder/166077218938
-2.	Unzip the downloaded folder into your ‘mapMOG’ folder such that the file structure is ‘[YOUR FILE PATH]/mapMOG/[PNV RASTER.tif]’
-3.	Rename the raster “utility_R5_PAZ” to ensure functionality
 
-
-Once you have added the canopy and PNV files to your `mapMOG` folder (if necessary), open R Studio and load the function by sourcing the script from the `mapMOG` folder. Note that the entire filepath must be specified for your computer to find the file.
+Once you have added the canopy raster in your `mapMOG` folder (if necessary), open R Studio and load the function by sourcing the script from the `mapMOG` folder. Note that the entire filepath must be specified for your computer to find the file.
 ```
 source("[YOUR FILE PATH]/mapMOG/FUNCTION_mapMOG.R") #loads function into R environment
 ```
